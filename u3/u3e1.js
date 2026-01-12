@@ -4,6 +4,33 @@
 
 // Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+function getAJoke(callback) {
+  
+    return fetch("https://geek-jokes.sameerkumar.website/api?format=json")
+        .then((respuesta) => {
+   
+            return respuesta.json();
+        })
+        .catch((error) => {
+            
+            callback(error);
+        });
+}
+
+
+const miManejadorDeErrores = (err) => {
+    console.error("¡Ups! Algo salió mal:", err);
+};
+
+
+console.log("Cargando chiste...");
+
+getAJoke(miManejadorDeErrores).then((datos) => {
+    
+    if (datos) {
+        console.log(" Chiste Geek:", datos.joke);
+    }
+});
 
 /**
 * TEST
