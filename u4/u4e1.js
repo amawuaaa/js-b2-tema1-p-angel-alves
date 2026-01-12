@@ -4,6 +4,51 @@
 
 //Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+async function countDown(amount, stepCallback) {
+ 
+    if (typeof stepCallback !== 'function') {
+        throw new Error("ERROR. Es obligatorio el paso de un callback como segundo parámetro.");
+    }
+
+    
+    console.log(" Iniciando cuenta atrás...");
+
+    
+    const esperar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    for (let i = amount; i >= 0; i--) {
+       
+        stepCallback(i);
+        
+        await esperar(1000);
+    }
+    
+    console.log(" ¡Despegue!");
+}
+
+
+
+
+const mostrarNumero = (num) => {
+    console.log(`> Paso: ${num}`);
+};
+
+
+try {
+    
+    await countDown(3, mostrarNumero); 
+} catch (error) {
+    console.error(error.message);
+}
+
+
+console.log("\n--- Probando el error ---");
+try {
+
+    await countDown(5, "No soy una función"); 
+} catch (error) {
+    console.error(" ERROR CAPTURADO:", error.message);
+}
 
 /**
 * TEST
